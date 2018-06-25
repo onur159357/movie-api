@@ -1,7 +1,7 @@
 # movie-api
 movie api
 
-#Category
+# Category
 
 | Route | HTTP Verb	 | POST body	 | Description |
 | --- | --- | --- | --- |
@@ -12,7 +12,7 @@ movie api
 | /api/category/:category_id | `DELETE` | Category delete | Redirect category list |
 
 
-#Movies
+# Movies
 
 | Route | HTTP Verb	 | POST body	 | Description |
 | --- | --- | --- | --- |
@@ -24,7 +24,7 @@ movie api
 | /api/movies/top10 | `GET` | Get the top 10 movies | Get the top 10 movies  |
 | /api/movies/between/:start_year/:end_year | `GET` | Movies between two dates | Movies between two dates |
 
-#Director
+# Director
 
 | Route | HTTP Verb	 | POST body	 | Description |
 | --- | --- | --- | --- |
