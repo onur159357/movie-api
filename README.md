@@ -2,6 +2,7 @@
 movie api
 
 #Category
+
 | Route | HTTP Verb	 | POST body	 | Description |
 | --- | --- | --- | --- |
 | /api/category | `POST` | { 'category' : 'catname', 'catSubNumber' : 'subnumber', 'catNumber' :'catNumber' }  | redirect category list|
@@ -12,6 +13,7 @@ movie api
 
 
 #Movies
+
 | Route | HTTP Verb	 | POST body	 | Description |
 | --- | --- | --- | --- |
 | /api/movies | `POST` | {'director' : 'id', 'category' : 'movies-category', 'title' : 'movies-name(unique, required)', 'movie_img' : 'movie-img', 'movie-video' : 'video, 'country' : 'movies-coutnry', 'year' : 'Date', 'imdb_score' : 'movies_imdb'  } | Movie Detail |
@@ -23,6 +25,7 @@ movie api
 | /api/movies/between/:start_year/:end_year | `GET` | Movies between two dates | Movies between two dates |
 
 #Director
+
 | Route | HTTP Verb	 | POST body	 | Description |
 | --- | --- | --- | --- |
 | /api/director | `POST` | { 'director_name' : 'name', 'director_surname' : 'surname', 'director_bio' : 'biography', 'director_age' : 'age', 'director_rate' : 'director_rate', } | Director detail   |
