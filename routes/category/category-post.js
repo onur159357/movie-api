@@ -26,10 +26,10 @@ router.post('/', (req, res, next) => {
 
                     }); 
             } else {
-                let errMsg1 ='<p>Aşağıdaki alanların aynılarınlan mevcut<p>';
+                let errMsg1 ='<p>Aşağıdaki alanların aynılarından mevcut<p>';
                 for(let i = 0; i < catTestControl.faultyArea.length; i++){
-                    
                     errMsg1 += `<p>${catTestControl.faultyArea[i]}</p>`;
+
                 }
                 resolve(errMsg1);
             }
