@@ -5,24 +5,13 @@ const mongoose = require('mongoose'),
       CategorySchema = require('../../model/Category');
 
 router.get('/', (req, res, next) => {
-    const categorySearch = () => {
-        return new Promise((resolve, reject) => {
-            const categories = CategorySchema.find();
+    const categorySchema = CategorySchema.find();
 
-            categories.then((data) => {
-                resolve(data);
-            }).catch((error) => {
-                resolve(error);
-            })
-        })
-    };
-
-    categorySearch().then((data) => {
+    categorySchema.then((data) => {
         res.json(data);
-    }).catch((error) => {
-        res.json(error);
-    })
-    
+    }).catch((err) => {
+        res.json(err);
+    });
 });
 
 module.exports = router;

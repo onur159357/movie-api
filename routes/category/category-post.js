@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
     const categorySave = (catTestControl) => {
         return new Promise((resolve, reject) => {
             if(catTestControl.result) {
-                const categorySchema = new CategorySchema(req.body);
+                const categorySchema = new CategorySchema(req.body, { versionKey: false });
                 const catPromis = categorySchema.save();
 
                 catPromis.then((data) => {
