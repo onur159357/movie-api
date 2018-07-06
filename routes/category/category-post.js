@@ -10,15 +10,18 @@ router.post('/', (req, res, next) => {
         'faultyArea' : [],
         'result' : Boolean,
     };
-
+    let lastCatId = 1;
     //category kayıt
     const categorySave = (catTestControl) => {
         return new Promise((resolve, reject) => {
             if(catTestControl.result) {
-                const categorySchema = new CategorySchema(req.body, { versionKey: false });
+                req.body.category_id = lastCatId;
+                const categorySchema = new CategorySchema(req.body);
+                
                 const catPromis = categorySchema.save();
 
                 catPromis.then((data) => {
+                    
                         resolve(data);
 
                     }).catch((error) => {
@@ -103,9 +106,25 @@ router.post('/', (req, res, next) => {
         })
 
     };
+    const category_id = () => {
+        return new Promise((resolve, reject) => {
+            const catId = CategorySchema.find().sort({category_id : -1}).limit();
+
+            catId.then((data) => {
+                lastCatId = data[0].category_id + 1;
+                
+                resolve(data);
+            }).catch((err) => {
+                resolve(err);
+            })
+        })
+    }
+    
     //RUN
-    srcCat()
-        .then((catName) => {
+    category_id()
+        .then((data) => {
+            return srcCat();
+        }).then((catName) => {
             return srcTest(catName);
         }).then((testCode) => {
             return categorySave(testCode);

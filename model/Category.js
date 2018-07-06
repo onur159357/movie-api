@@ -7,13 +7,12 @@ const CategorySchema = new Schema({
         unique : true,
         required : [true, '{PATH} i Girmek Zorundasınız'],
     },
-    test_code : {
+    // test_code : {
+    //     type : Number,
+    //     unique : true,
+    // },
+    category_id : {
         type : Number,
-        unique : true,
-    },
-    category_number : {
-        type : Number,
-        default : 0,   
     },
     category_sub_number : {
         type : Number,
