@@ -11,6 +11,7 @@ router.post('/', (req, res, next) => {
         'result' : Boolean,
     };
     let lastCatId = 1;
+    
     //category kayıt
     const categorySave = (catTestControl) => {
         return new Promise((resolve, reject) => {
@@ -97,25 +98,30 @@ router.post('/', (req, res, next) => {
                 if(errMsg.result){
                     errMsg.result = true;
                     resolve(errMsg);
+
                 } else {
                     errMsg.result = false;
                     resolve(errMsg);
+
                 }
             };
 
         })
 
     };
+
+    //Auto-Increment 
     const category_id = () => {
         return new Promise((resolve, reject) => {
             const catId = CategorySchema.find().sort({category_id : -1}).limit();
 
             catId.then((data) => {
                 lastCatId = data[0].category_id + 1;
-                
                 resolve(data);
+
             }).catch((err) => {
                 resolve(err);
+
             })
         })
     }
@@ -124,12 +130,16 @@ router.post('/', (req, res, next) => {
     category_id()
         .then((data) => {
             return srcCat();
+
         }).then((catName) => {
             return srcTest(catName);
+
         }).then((testCode) => {
             return categorySave(testCode);
+
         }).then((data) => {
             res.json(data);
+
         })
 });
 
