@@ -7,7 +7,7 @@ const hbs = require('express-handlebars');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const {categoryPost, categoryGet, categoryGetId, categoryUpdate} = require('./routes/category/categories');
+const {categoryPost, categoryGet, categoryGetId, categoryUpdate, categoryDelete} = require('./routes/category/categories');
 
 const app = express();
 
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/category', categoryPost, categoryGet, categoryGetId, categoryUpdate);
+app.use('/category', categoryPost, categoryGet, categoryGetId, categoryUpdate, categoryDelete);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
