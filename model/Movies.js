@@ -8,12 +8,12 @@ const MovieSchema = new Schema({
     },
     category : {
         type: Schema.Types.ObjectId,
-       required : [true, '{PATH} i Girmek Zorundasınız']
+        required : [true, '{PATH} i Girmek Zorundasınız']
     },
     movie_name : {
         type : String,
-       //unique : true,
-       required : [true, '{PATH} i Girmek Zorundasınız'],
+        unique : true,
+        required : [true, '{PATH} i Girmek Zorundasınız'],
     },
     movie_video : {
         type : String,

@@ -5,7 +5,6 @@ const router = express.Router();
 const CategorySchema = require('../../model/Category');
 
 router.post('/', (req, res, next) => {
-    console.log(req.body);
     let errMsg = {
         'faultyArea' : [],
         'result' : Boolean,
