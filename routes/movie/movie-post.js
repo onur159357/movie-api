@@ -16,7 +16,6 @@ const storage = multer.diskStorage({//Disk depolama altyapısı, dosyaları disk
     },
 });
 
-
 const fileFilter = (req, file, cb) => {//Hangi dosyaların yüklenmesi gerektiğini ve hangilerinin atlanması gerektiğini kontrol etmek için bunu bir işlev olarak ayarlayın.
     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
@@ -46,6 +45,7 @@ router.post('/', upload.single('movie_img'), (req, res, next) => {
    let errMsg = {
         'faultyArea' : [],
         'result' : Boolean,
+
     };
     //unique controler
     const movieNameSearch = () => {
@@ -56,10 +56,13 @@ router.post('/', upload.single('movie_img'), (req, res, next) => {
                 if(data.length > 0) {
                     errMsg.faultyArea = data[0].movie_name;
                     errMsg.result = false;
+
                 } else {
                     errMsg.result = true; 
+
                 }
                 resolve(data);
+
             }).catch((err) => {
                 reject(err);
 
@@ -101,15 +104,17 @@ router.post('/', upload.single('movie_img'), (req, res, next) => {
     };
 
     movieNameSearch()
-    .then((data) => {
-        return movieSave();
-    }).then((data) => {
-        res.json(data);
-    }).catch((err) => {
-        res.json(err);
-    })
-   
+        .then((data) => {
+            return movieSave();
 
+        }).then((data) => {
+            res.json(data);
+
+        }).catch((err) => {
+            res.json(err);
+            
+        })
+   
 });
 
 module.exports = router;
