@@ -1,11 +1,15 @@
 const express = require('express'),
     router = express.Router();
 
+const fs = require('fs');
+const upload = require('../file-upload'),
+    cpUpload = upload.fields([{ name: 'movie_img'}, { name: 'movie_video'}]);
+
 //MODEL
-const mongoose = require('mongoose');
 const MovieSchema = require('../../model/Movies');
 
-router.put('/:movie_id', (req, res, next) => {
+
+router.put('/:movie_id', cpUpload, (req, res, next) => {
     let errMsg = {
         'faultyArea' : [],
         'result' : Boolean,
@@ -27,6 +31,12 @@ router.put('/:movie_id', (req, res, next) => {
                 
             })
         })
+    };
+    //File Delete
+    const movieFileDelete = () => {
+        return new Promise((resolve, reject) => {
+            console.log(req.files);
+        });
     }
     //movie update
     const movieUpdate = () => {
@@ -35,7 +45,8 @@ router.put('/:movie_id', (req, res, next) => {
             if(errMsg.result) {
                 const movieSchema = MovieSchema.findByIdAndUpdate(
                     req.params.movie_id, 
-                    req.body,
+                    req.body, 
+                   
                     {new : true}
 
                 );
@@ -62,6 +73,9 @@ router.put('/:movie_id', (req, res, next) => {
     }
 
     movieNameSearch()
+        .then((data) => {
+            movieFileDelete();
+        })
         .then((data) => {
             return movieUpdate();
 
