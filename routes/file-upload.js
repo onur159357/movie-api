@@ -18,20 +18,19 @@ const fileFilter = (req, file, cb) => {//Hangi dosyaların yüklenmesi gerektiğ
         cb(null, true);
         
     } else {
-        cb(new Error('sadece jpeg ve png kaydedebilirsin '), false);
+        cb(new Error('sadece jpeg, png ve quicktime kaydedebilirsin '), false);
 
     }
 }
 
 const upload = multer({//Dosyaları nerede saklayacağımız, ebatları, format filtreleme
     
-    storage : storage, 
+    storage : storage,
+    fileFilter : fileFilter,
     limits : {
         fileSize : 1024 * 1024 * 5
 
     },
-
-    fileFilter : fileFilter,
 
 });
 

@@ -1,4 +1,5 @@
 const MovieSchema = require('../model/Movies');
+
 const uniqueControler = (search, colName) => {
     return new Promise((resolve, reject) => {
         let errMsg = {
@@ -6,7 +7,7 @@ const uniqueControler = (search, colName) => {
             'result' : Boolean,
     
         };
-        const promise = MovieSchema.find( { movie_name : search});
+        const promise = MovieSchema.find({[colName] : [search]});
 
         promise.then((data) => {
             if(data.length > 0) {

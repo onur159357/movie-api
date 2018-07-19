@@ -13,7 +13,7 @@ const uniqueControler = require('../unique-controler');
 //MODEL
 const  MovieSchema = require('../../model/Movies');
 
-router.post('/' , cpUpload, (req, res, next) => {   
+router.post('/' ,cpUpload , (req, res, next) => {   
    //console.log(req.files);
     //movie save
     const movieSave = (errMsg) => {
@@ -61,7 +61,6 @@ router.post('/' , cpUpload, (req, res, next) => {
                     reject(err);
 
                 });
-                
             } else {
                 try {
                     //file delete
