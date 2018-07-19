@@ -1,9 +1,13 @@
-const moviePost = require('./movie-post');
-const movieGetList = require('./movie-get-list');
-const movieGetId = require('./movie-get-id');
-const moviePutId = require('./movie-put-id');
+const moviePost = require('./movie-post'),
+    movieGetList = require('./movie-get-list'),
+    movieGetId = require('./movie-get-id'),
+    moviePutId = require('./movie-put-id'),
+    movieDeleteId = require('./movie-delete-id'),
+    movieGetTop10 = require('./movie-get-top10');
 
 module.exports.moviePost = moviePost;
 module.exports.movieGetList = movieGetList;
 module.exports.movieGetId = movieGetId;
 module.exports.moviePutId = moviePutId;
+module.exports.movieDeleteId = movieDeleteId;
+module.exports.movieGetTop10 = movieGetTop10;
