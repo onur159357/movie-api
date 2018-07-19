@@ -39,10 +39,31 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
             } else {
                  const promise = MovieSchema.findById(req.params.movie_id);
                  promise.then((data) => {
-                    let imgName = `./uploads/${data.movie_img}`;
-                    let videoName = `./uploads/${data.movie_video}`;
+                     let imgName;
+                     let videoName;
+                     if(req.files.movie_img && req.files.movie_video) {
+                        imgName = `./uploads/${data.movie_img}`;
+                        if(data.movie_video !== undefined) {
+                            videoName = `./uploads/${data.movie_video}`;
+
+                        }
+
+                     } else if (req.files.movie_img) {
+                        imgName = `./uploads/${data.movie_img}`;
+
+                     } else if (req.files.movie_video){
+                        if(data.movie_video !== undefined) {
+                            videoName = `./uploads/${data.movie_video}`;
+
+                        }
+
+                     };
+                    
                     deleteFile(imgName, videoName);
 
+                    //boş gelen put istegine eski db adını yazmak için
+                    errMsg.imgName = data.movie_img,
+                    errMsg.videoName = data.movie_video, 
                     resolve(errMsg);
                  
                 }).catch((err) => {
@@ -55,14 +76,13 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
 
     const movieUpdate = (errMsg) => {
         return new Promise((resolve, reject) => {
-            console.log(errMsg);
             //file controler
             for(key in req.files) {
                 if(key === 'movie_img') {
                     var movieImg = req.files.movie_img[0].filename;
                     break;
                 } else {
-                    var movieImg = undefined;
+                    var movieImg = errMsg.imgName;
                 };
             }
             for(key in req.files) {
@@ -70,7 +90,7 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
                     var movieVideo = req.files.movie_video[0].filename;
                     break;
                 } else {
-                    var movieVideo = undefined;
+                    var movieVideo = errMsg.videoName;
                 };
             }
             const changeMovie = {
