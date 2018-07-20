@@ -30,9 +30,18 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
 
     const fileControl = (errMsg) => {
         return new Promise((resolve, reject) => {
+            
             if(errMsg.result === false) {
+                
                 let imgName = `${req.files.movie_img[0].destination}${req.files.movie_img[0].filename}`;
-                let videoName = `${req.files.movie_video[0].destination}${req.files.movie_video[0].filename}`;
+                let videoName;
+                if(req.files.movie_video){
+                    videoName = `${req.files.movie_video[0].destination}${req.files.movie_video[0].filename}`;
+                }else {
+                    videoName = undefined;
+                }
+                
+                
                 deleteFile(imgName, videoName);
 
                 resolve(errMsg);
@@ -54,16 +63,16 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
                      } else if (req.files.movie_video){
                         if(data.movie_video !== undefined) {
                             videoName = `./uploads/${data.movie_video}`;
-
+                            
                         }
 
                      };
                     
                     deleteFile(imgName, videoName);
-
                     //boş gelen put istegine eski db adını yazmak için
-                    errMsg.imgName = data.movie_img,
-                    errMsg.videoName = data.movie_video, 
+                    errMsg.imgName = data.movie_img;
+                    errMsg.videoName = data.movie_video;
+                    
                     resolve(errMsg);
                  
                 }).catch((err) => {
@@ -80,6 +89,7 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
             for(key in req.files) {
                 if(key === 'movie_img') {
                     var movieImg = req.files.movie_img[0].filename;
+
                     break;
                 } else {
                     var movieImg = errMsg.imgName;
@@ -93,20 +103,19 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
                     var movieVideo = errMsg.videoName;
                 };
             }
-            const changeMovie = {
-                director : req.body.director,
-                category : req.body.category,
-                movie_name : req.body.movie_name,
-                movie_country : req.body.movie_country,
-                imdb_score : req.body.imdb_score,
-                movie_year : req.body.movie_year, 
-                movie_img : movieImg, //FILE
-                movie_video : movieVideo,//FILE    
+
+            if(movieImg){
+                req.body.movie_img = movieImg
             }
+            
+            if(movieVideo){
+                req.body.movie_video = movieVideo;//FILE   
+            }
+            
             if(errMsg.result) {
                 const movieSchema = MovieSchema.findByIdAndUpdate(
                     req.params.movie_id, 
-                    changeMovie,        
+                    req.body,        
                     {new : true}
 
                 );
@@ -138,6 +147,7 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
 
    }).then((data) => {
        return movieUpdate(data);
+
    }).then((data) => {
        res.json(data);
 

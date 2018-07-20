@@ -1,11 +1,11 @@
 const express = require('express'),
     router = express.Router();
 
-//MODEL
-const MovieSchema = require('../../model/Movies');
+//Model
+const DirectorSchema = require('../../model/Director');
 
-router.get('/top10_movie', (req, res, next) => {
-    const promise = MovieSchema.find({}).limit(10).sort({imdb_score : -1});
+router.get('/:director_id', (req, res, next) => {
+    const promise = DirectorSchema.findById(req.params.director_id);
 
     promise.then((data) => {
         res.json(data);

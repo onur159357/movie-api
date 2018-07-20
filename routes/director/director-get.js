@@ -1,17 +1,17 @@
 const express = require('express'),
     router = express.Router();
 
-//MODEL
-const MovieSchema = require('../../model/Movies');
+//Model
+const DirectorSchema = require('../../model/Director');
 
-router.get('/top10_movie', (req, res, next) => {
-    const promise = MovieSchema.find({}).limit(10).sort({imdb_score : -1});
+router.get('/', (req, res, next) => {
+    const promise = DirectorSchema.find();
 
     promise.then((data) => {
         res.json(data);
     }).catch((err) => {
         res.json(err);
-    })
+    });
 });
 
 module.exports = router;
