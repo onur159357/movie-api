@@ -5,9 +5,11 @@ const MovieSchema = require('../../model/Movies');
 router.get('/between/:start_year/:end_year', (req, res, next) => {
     const {start_year, end_year} = req.params;
 
-    const promise = MovieSchema.find({
-        imdb_score : { '$gte' : parseInt(start_year), '$lte' : parseInt(end_year) }
-    });
+    const promise = MovieSchema.find(
+        {  
+            movie_year : { $gte :  new Date(`<${start_year}>`), $lte : new Date(`<${end_year}>`)}
+        }, 
+    ).sort({movie_year : 1});
 
     promise.then((data) => {
         res.json(data);
@@ -18,5 +20,5 @@ router.get('/between/:start_year/:end_year', (req, res, next) => {
     });
 });
 
-module.exports = router;
+module.exports = router; 
 

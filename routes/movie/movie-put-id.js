@@ -27,8 +27,8 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
 
         }
     };
-
-    const fileControl = (errMsg) => {
+      
+     const fileControl = (errMsg) => {
         return new Promise((resolve, reject) => {
             
             if(errMsg.result === false) {
@@ -37,10 +37,11 @@ router.put('/:movie_id', cpUpload, (req, res, next) => {
                 let videoName;
                 if(req.files.movie_video){
                     videoName = `${req.files.movie_video[0].destination}${req.files.movie_video[0].filename}`;
+
                 }else {
                     videoName = undefined;
+
                 }
-                
                 
                 deleteFile(imgName, videoName);
 
