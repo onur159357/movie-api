@@ -18,7 +18,7 @@ router.put('/:category_id', (req, res, next) => {
             };
             const categorySchema = CategorySchema.find({category_name : req.body.category_name});
             categorySchema.then((data) => {
-                if(data.length > 0) {
+                if(data.length > 0 && req.params.category_id != data[0]._id) {
                     errMsg.faultyArea = data[0].category_name;
                     errMsg.result = false;
                     resolve(errMsg);

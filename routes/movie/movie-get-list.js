@@ -14,8 +14,11 @@ router.get('/', (req, res, next) => {
                 }
             },
             {
-                $unwind : '$directors', // yukarıda as ile tanımlanan değişken
-                // preserveNullAndEmptyArrays : True  
+                $unwind : {
+                    path : '$directors',
+                    preserveNullAndEmptyArrays: true //Herhangi bir eşleşme yoksa yinede göstersin
+                }, // yukarıda as ile tanımlanan değişken
+                
             },
             {
                 $lookup : {
@@ -26,7 +29,11 @@ router.get('/', (req, res, next) => {
                 }
             },
             {
-                $unwind : '$category',
+                $unwind : {
+                   path : '$category',
+                   preserveNullAndEmptyArrays: true //Herhangi bir eşleşme yoksa yinede göstersin
+                },
+                
             },
             {
                 $project: {
@@ -49,8 +56,10 @@ router.get('/', (req, res, next) => {
     
     movieSchema.then((data) => {
         res.json(data);
+
     }). catch((err) => {
         res.json(err);
+        
     })
 });
 

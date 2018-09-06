@@ -21,7 +21,6 @@ router.post('/', (req, res, next) => {
                 const catPromis = categorySchema.save();
 
                 catPromis.then((data) => {
-                    
                         resolve(data);
 
                     }).catch((error) => {
